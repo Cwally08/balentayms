@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4 Pics 1 Word Game</title>
+<link rel="stylesheet" href="../css/game.css">
+</head>
+<body>
+    <div class="floating-hearts" id="floatingHearts"></div>
+    <div class="game-container">
+        <!-- Top Music Bar -->
+        <div class="top-bar">
+            <button class="music-btn" id="musicBtn" onclick="toggleMusic()">
+                <span class="music-icon">🎧</span>
+            </button>
+            
+            <div class="music-info">
+                <div class="music-title" id="musicTitle">Your Love by Juris (cover)</div>
+                <div class="equalizer" id="equalizer">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="title">4 Pics 1 Word</div>
+        <p class="puzzle-counter" id="puzzleCounter">Puzzle 1 of 3</p>
+        
+        <div class="images-grid" id="imagesGrid">
+            <div class="image-box">
+                <img id="img1" src="" alt="pic1">
+            </div>
+            <div class="image-box">
+                <img id="img2" src="" alt="pic2">
+            </div>
+            <div class="image-box">
+                <img id="img3" src="" alt="pic3">
+            </div>
+            <div class="image-box">
+                <img id="img4" src="" alt="pic4">
+            </div>
+        </div>
+
+        <div class="answer-boxes" id="answerBoxes">
+            <!-- Answer slots will be generated here -->
+        </div>
+
+        <div class="letter-pool" id="letterPool">
+            <!-- Letter buttons will be generated here -->
+        </div>
+
+        <div class="controls">
+            <button class="control-btn shuffle-btn" onclick="shuffleLetters()">Shuffle</button>
+            <button class="control-btn clear-btn" onclick="clearAnswer()">Clear</button>
+            <button class="control-btn hint-btn" onclick="giveHint()">Hint</button>
+            <button class="control-btn submit-btn" onclick="submitAnswer()">Submit</button>
+        </div>
+
+        <div class="message" id="message"></div>
+    </div>
+
+    <!-- Quote Modal -->
+    <div class="quote-overlay" id="quoteOverlay">
+        <div class="quote-modal">
+            <p class="quote-text" id="quoteText"></p>
+            <button class="continue-btn" onclick="continueToNextPuzzle()">CONTINUE</button>
+        </div>
+    </div>
+
+    <!-- Hidden Audio Element -->
+    <audio id="bgMusic" loop>
+        <source src="../images/Your-Love-by-Juris.mp3" type="audio/mpeg">
+    </audio>
+
+<script src="../js/game.js"></script>
+</body>
+</html>

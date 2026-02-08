@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Question</title>
+<link rel="stylesheet" href="../css/question.css">
+</head>
+<body>
+    <div class="floating-hearts" id="floatingHearts"></div>
+    <div class="play-game">
+        <div class="content-wrapper">
+            <div class="gif-container">
+                <img src="../images/cat.gif" id="mainGif">
+            </div>
+            
+            <p class="message">Want mo maglaro<br>my love so sweet? 💕</p>
+            
+            <div class="button-container">
+                <button class="yes" onclick="handleYes()">Oo naman! 😍</button>
+                <button class="no" id="noBtn">Ayaw ko! 😡🖕</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Overlay -->
+    <div class="success-overlay" id="successOverlay">
+        <div class="success-content">
+            <div class="success-gif">
+                <img src="../images/catyes.gif" alt="happy celebration gif">
+            </div>
+            <div class="success-message">Yay! Let's play! 🎉</div>
+            <div class="hearts">❤️💕💖</div>
+        </div>
+    </div>
+
+<script src="../js/question.js"></script>
+</body>
+</html>
