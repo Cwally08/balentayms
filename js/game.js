@@ -43,7 +43,7 @@ const puzzles = [
         letters: ["R","A","A","D","Y","I","N","M","C","T","E","K"],
         images: [
             "../images/radiance1.jpg",
-            "../images/radiance2.JPG",
+            "../images/radiance2.jPG",
             "../images/radiance3.jpg",
             "../images/radiance4.jpg"
         ],
