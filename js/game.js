@@ -20,7 +20,7 @@ const puzzles = [
         word: "GORGEOUS",
         letters: ["G","U","N","O","E","T","S","R","A","G","O","K"],
         images: [
-            "../images/gorg5.jpeg",
+            "../images/gorg5.jpg",
             "../images/gorg2.jpg",
             "../images/gorg3.jpg",
             "../images/gorg4.jpg"
@@ -31,7 +31,7 @@ const puzzles = [
         word: "FUTURE",
         letters: ["F","H","T","B","R","E","A","U","C","D","G","U"],
         images: [
-            "../images/future1.webp",
+            "../images/future1.jpg",
             "../images/future3.jpg",
             "../images/future4.jpg",
             "../images/future2.jpg"
