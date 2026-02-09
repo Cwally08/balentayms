@@ -31,7 +31,7 @@ const puzzles = [
         word: "FUTURE",
         letters: ["F","H","T","B","R","E","A","U","C","D","G","U"],
         images: [
-            "../images/future1.webp",
+            "../images/future1.jpg",
             "../images/future3.jpg",
             "../images/future4.jpg",
             "../images/future2.jpg"
