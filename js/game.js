@@ -43,7 +43,7 @@ const puzzles = [
         letters: ["R","A","A","D","Y","I","N","M","C","T","E","K"],
         images: [
             "../images/radiance1.jpg",
-            "../images/radiance2.jPG",
+            "../images/radiance2.jpg",
             "../images/radiance3.jpg",
             "../images/radiance4.jpg"
         ],
@@ -136,25 +136,53 @@ function toggleMusic() {
 
 function loadPuzzle(index) {
     const puzzle = puzzles[index];
-    correctWord = puzzle.word;
-    letters = puzzle.letters;
-    currentAnswer = [];
-    usedLetterIndices = [];
+    const imagesGrid = document.getElementById('imagesGrid');
+    const controls = document.querySelector('.controls');
     
-    // Update puzzle counter
-    document.getElementById('puzzleCounter').textContent = `Puzzle ${index + 1} of 3`;
+    // Fade out controls
+    controls.style.opacity = '0';
     
-    // Load images
-    for (let i = 1; i <= 4; i++) {
-        document.getElementById(`img${i}`).src = puzzle.images[i - 1];
-    }
+    // Fade out images
+    imagesGrid.style.opacity = '0';
     
-    // Clear message
-    document.getElementById('message').textContent = '';
-    document.getElementById('message').className = 'message';
-    
-    renderAnswerSlots();
-    renderLetterPool();
+    setTimeout(() => {
+        correctWord = puzzle.word;
+        letters = puzzle.letters;
+        currentAnswer = [];
+        usedLetterIndices = [];
+        
+        document.getElementById('puzzleCounter').textContent = `Puzzle ${index + 1} of 3`;
+        
+        // Load images
+        for (let i = 1; i <= 4; i++) {
+            document.getElementById(`img${i}`).src = puzzle.images[i - 1];
+        }
+        
+        document.getElementById('message').textContent = '';
+        document.getElementById('message').className = 'message';
+        
+        renderAnswerSlots();
+        renderLetterPool();
+        
+        // Fade in images
+        setTimeout(() => {
+            imagesGrid.style.opacity = '1';
+        }, 50);
+        
+        // Fade in controls with delay
+        setTimeout(() => {
+            controls.style.opacity = '1';
+            
+            // Re-trigger button animations
+            const buttons = controls.querySelectorAll('.control-btn');
+            buttons.forEach(btn => {
+                btn.style.animation = 'none';
+                setTimeout(() => {
+                    btn.style.animation = '';
+                }, 10);
+            });
+        }, 400);
+    }, 300);
 }
 
 function shuffleLetters() {
@@ -246,118 +274,172 @@ function showQuoteModal() {
 }
 
 function continueToNextPuzzle() {
-    document.getElementById('quoteOverlay').style.display = 'none';
+    const overlay = document.getElementById('quoteOverlay');
     
-    currentPuzzleIndex++;
+    // Fade out the quote overlay
+    overlay.style.opacity = '0';
     
-    if (currentPuzzleIndex < puzzles.length) {
-        loadPuzzle(currentPuzzleIndex);
-    } else {
-        // Game completed! Redirect or show final message
-        showFinalMessage();
-    }
+    setTimeout(() => {
+        overlay.style.display = 'none';
+        overlay.style.opacity = '1'; // Reset for next time
+        
+        currentPuzzleIndex++;
+        
+        if (currentPuzzleIndex < puzzles.length) {
+            loadPuzzle(currentPuzzleIndex);
+        } else {
+            // Game completed! Redirect or show final message
+            showFinalMessage();
+        }
+    }, 300);
 }
 
 let finalTypeTimer = null;
 
 function showFinalMessage() {
     const container = document.querySelector('.game-container');
+    
+    // Fade out current content
+    container.style.opacity = '0';
+    container.style.transform = 'scale(0.95)';
+    
+    setTimeout(() => {
+        container.innerHTML = `
+            <div style="display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding:20px; gap:20px; height:100%; opacity:0; transform:translateY(20px); transition:all 0.5s ease;">
+                <!-- GIF at the top with border -->
+                <img 
+                    src="../images/catflower.gif" 
+                    alt="ending gif" 
+                    style="width:180px; max-width:80%; border-radius:16px; border:5px solid #000; box-shadow:0 8px 16px rgba(0,0,0,0.3); opacity:0; transform:scale(0.8); transition:all 0.5s ease 0.2s;"
+                    id="finalGif"
+                >
 
-    container.innerHTML = `
-        <div style="display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding:20px; gap:20px; height:100%;">
-            <!-- GIF at the top with border -->
-            <img 
-                src="../images/catflower.gif" 
-                alt="ending gif" 
-                style="width:180px; max-width:80%; border-radius:16px; border:5px solid #000; box-shadow:0 8px 16px rgba(0,0,0,0.3);"
-            >
+                <!-- White message container -->
+                <div id="finalMessageBox" style="
+                    width:100%;
+                    max-width:420px;
+                    background:#fff;
+                    border:5px solid #000;
+                    border-radius:18px;
+                    padding:25px 20px;
+                    box-shadow:0 10px 25px rgba(0,0,0,.25);
+                    min-height:220px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    opacity:0;
+                    transform:translateY(20px);
+                    transition:all 0.5s ease 0.4s;
+                ">
+                    <p id="finalMessageText" style="
+                        font-size:20px;
+                        line-height:1.7;
+                        color:#333;
+                        text-align:center;
+                        margin:0;
+                        font-style:italic;
+                    "></p>
+                </div>
 
-            <!-- White message container -->
-            <div style="
-                width:100%;
-                max-width:420px;
-                background:#fff;
-                border:5px solid #000;
-                border-radius:18px;
-                padding:25px 20px;
-                box-shadow:0 10px 25px rgba(0,0,0,.25);
-                min-height:220px;
-                display:flex;
-                align-items:center;
-                justify-content:center;
-            ">
-                <p id="finalMessageText" style="
+                <!-- Restart button (hidden initially) -->
+                <button id="restartButton" onclick="restartGame()" style="
+                    display:none;
+                    padding:15px 20px;
                     font-size:20px;
-                    line-height:1.7;
-                    color:#333;
-                    text-align:center;
-                    margin:0;
-                    font-style:italic;
-                "></p>
+                    font-weight:bold;
+                    background:linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+                    color:white;
+                    border:4px solid #000;
+                    border-radius:12px;
+                    cursor:pointer;
+                    box-shadow:0 6px 12px rgba(0,0,0,0.2);
+                    transition:all 0.3s ease;
+                    font-family: 'Arial Black', sans-serif;
+                    margin-top:20px;
+                    opacity:0;
+                    transform:translateY(10px);
+                " onmouseover="this.style.transform='scale(1.05) translateY(10px)'" onmouseout="this.style.transform='scale(1) translateY(10px)'">
+                    🔄 Play Again
+                </button>
             </div>
-
-            <!-- Restart button (hidden initially) -->
-            <button id="restartButton" onclick="restartGame()" style="
-                display:none;
-                padding:15px 20px;
-                font-size:20px;
-                font-weight:bold;
-                background:linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
-                color:white;
-                border:4px solid #000;
-                border-radius:12px;
-                cursor:pointer;
-                box-shadow:0 6px 12px rgba(0,0,0,0.2);
-                transition:all 0.3s ease;
-                font-family: 'Arial Black', sans-serif;
-                margin-top:20px;
-            " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                🔄 Play Again
-            </button>
-        </div>
-    `;
-
-    const message = 
-    `I made this little game for you…
-    but honestly,
-    you're the only one I want to win with in real life.
-
-    Looking at you, I see my future.
-    Not just plans, not just dreams,
-    but a life I want to build with you.
-
-    Thank you for being my favorite person,
-    my safe place,
-    and my happiest ending.
-
-    Happy Valentine's Day. I love you. ❤️`;
-
-    const el = document.getElementById("finalMessageText");
-    const restartBtn = document.getElementById("restartButton");
-
-    if (finalTypeTimer) clearInterval(finalTypeTimer);
-
-    let i = 0;
-    el.textContent = "";
-
-    finalTypeTimer = setInterval(() => {
-        el.textContent += message.charAt(i);
-        i++;
-
-        if (i >= message.length) {
-            clearInterval(finalTypeTimer);
-            finalTypeTimer = null;
+        `;
+        
+        // Fade in container
+        setTimeout(() => {
+            container.style.opacity = '1';
+            container.style.transform = 'scale(1)';
             
-            // Show restart button after typing completes
-            setTimeout(() => {
-                restartBtn.style.display = "block";
-            }, 500);
-        }
-    }, 35);
+            // Trigger animations
+            const wrapper = container.firstElementChild;
+            const gif = document.getElementById('finalGif');
+            const messageBox = document.getElementById('finalMessageBox');
+            
+            wrapper.style.opacity = '1';
+            wrapper.style.transform = 'translateY(0)';
+            gif.style.opacity = '1';
+            gif.style.transform = 'scale(1)';
+            messageBox.style.opacity = '1';
+            messageBox.style.transform = 'translateY(0)';
+        }, 50);
+        
+        const message = 
+        `I made this little game for you…
+        but honestly,
+        you're the only one I want to win with in real life.
+
+        Looking at you, I see my future.
+        Not just plans, not just dreams,
+        but a life I want to build with you.
+
+        Thank you for being my favorite person,
+        my safe place,
+        and my happiest ending.
+
+        Happy Valentine's Day. I love you. ❤️`;
+
+        const el = document.getElementById("finalMessageText");
+        const restartBtn = document.getElementById("restartButton");
+
+        if (finalTypeTimer) clearInterval(finalTypeTimer);
+
+        // Wait for animations to finish before typing
+        setTimeout(() => {
+            let i = 0;
+            el.textContent = "";
+
+            finalTypeTimer = setInterval(() => {
+                el.textContent += message.charAt(i);
+                i++;
+
+                if (i >= message.length) {
+                    clearInterval(finalTypeTimer);
+                    finalTypeTimer = null;
+                    
+                    // Show restart button with animation
+                    setTimeout(() => {
+                        restartBtn.style.display = "block";
+                        setTimeout(() => {
+                            restartBtn.style.opacity = "1";
+                            restartBtn.style.transform = "translateY(0)";
+                        }, 50);
+                    }, 500);
+                }
+            }, 35);
+        }, 800); // Wait for fade-in animations
+        
+    }, 300);
 }
 
 function restartGame() {
-    location.reload(); // Reloads the browser/page
+    const container = document.querySelector('.game-container');
+    
+    // Fade out before reload
+    container.style.opacity = '0';
+    container.style.transform = 'scale(0.95)';
+    
+    setTimeout(() => {
+        location.reload();
+    }, 300);
 }
 
 

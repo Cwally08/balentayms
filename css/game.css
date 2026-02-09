@@ -13,23 +13,27 @@ body {
     min-height: 100vh;
     font-family: 'Jost', sans-serif;
     background: linear-gradient(to bottom, #ffbad1 0%, #ffd5e5 25%, #ffe8dd 50%, #ffdcc4 75%, #ffc9a8 100%);
-    padding: 0; /* Changed from 10px */
+    padding: 0;
+    overflow-x: hidden; /* Add this */
 }
 
-.floating-hearts{
+.floating-hearts {
     position: fixed;
     inset: 0;
     pointer-events: none;
     overflow: hidden;
     z-index: 1;
+    width: 100vw; /* Add this */
+    max-width: 100%; /* Add this */
 }
 
-.floating-hearts span{
+.floating-hearts span {
     position: absolute;
     bottom: -40px;
     font-size: 24px;
     animation: floatUp linear forwards;
     opacity: .8;
+    max-width: 100%; /* Add this */
 }
 
 @keyframes floatUp{
@@ -43,14 +47,19 @@ body {
     width: 100%;
     max-width: 390px;
     min-height: 100vh;
-    max-height: none; /* Changed from 95vh */
-    border-radius: 0; /* Changed from 8px */
+    max-height: none;
+    border-radius: 0;
     display: flex;
     flex-direction: column;
     position: relative;
     overflow-y: auto;
-    padding: 0; /* Changed from 10px */
-    background: linear-gradient(to bottom, #ffbad1 0%, #ffd5e5 25%, #ffe8dd 50%, #ffdcc4 75%, #ffc9a8 100%); /* Add background */
+    overflow-x: hidden;
+    padding: 0;
+    background: linear-gradient(to bottom, #ffbad1 0%, #ffd5e5 25%, #ffe8dd 50%, #ffdcc4 75%, #ffc9a8 100%);
+    /* Add transitions */
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .title {
@@ -76,9 +85,12 @@ body {
     gap: 8px;
     padding: 0 15px;
     width: 100%;
-    max-width: 400px;   /* optional – controls overall size */
+    max-width: 400px;
     aspect-ratio: 1 / 1;
     margin: 0 auto 12px auto;
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .image-box {
@@ -105,6 +117,8 @@ body {
     padding: 0 15px;
     margin: 12px 0;
     flex-wrap: wrap;
+    opacity: 1;
+    transition: opacity 0.3s ease;
 }
 
 .answer-slot {
@@ -119,7 +133,29 @@ body {
     font-size: 26px;
     font-weight: bold;
     color: #000;
+    animation: fadeInScale 0.3s ease forwards;
+    opacity: 0;
 }
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.answer-slot:nth-child(1) { animation-delay: 0s; }
+.answer-slot:nth-child(2) { animation-delay: 0.05s; }
+.answer-slot:nth-child(3) { animation-delay: 0.1s; }
+.answer-slot:nth-child(4) { animation-delay: 0.15s; }
+.answer-slot:nth-child(5) { animation-delay: 0.2s; }
+.answer-slot:nth-child(6) { animation-delay: 0.25s; }
+.answer-slot:nth-child(7) { animation-delay: 0.3s; }
+.answer-slot:nth-child(8) { animation-delay: 0.35s; }
 
 .answer-slot.filled {
     background: #F9DFDF;
@@ -132,6 +168,8 @@ body {
     gap: 5px;
     padding: 0 20px;
     margin-top: 12px;
+    opacity: 1;
+    transition: opacity 0.3s ease;
 }
 
 .letter-btn {
@@ -146,7 +184,33 @@ body {
     cursor: pointer;
     transition: all 0.2s;
     font-family: 'Arial Black', sans-serif;
+    animation: fadeInUp 0.3s ease forwards;
+    opacity: 0;
 }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.letter-btn:nth-child(1) { animation-delay: 0s; }
+.letter-btn:nth-child(2) { animation-delay: 0.05s; }
+.letter-btn:nth-child(3) { animation-delay: 0.1s; }
+.letter-btn:nth-child(4) { animation-delay: 0.15s; }
+.letter-btn:nth-child(5) { animation-delay: 0.2s; }
+.letter-btn:nth-child(6) { animation-delay: 0.25s; }
+.letter-btn:nth-child(7) { animation-delay: 0.3s; }
+.letter-btn:nth-child(8) { animation-delay: 0.35s; }
+.letter-btn:nth-child(9) { animation-delay: 0.4s; }
+.letter-btn:nth-child(10) { animation-delay: 0.45s; }
+.letter-btn:nth-child(11) { animation-delay: 0.5s; }
+.letter-btn:nth-child(12) { animation-delay: 0.55s; }
 
 .letter-btn:hover {
     background: #ffe6cc;
@@ -169,6 +233,8 @@ body {
     margin-top: 15px;
     padding: 0 20px;
     flex-wrap: wrap;
+    opacity: 1;
+    transition: opacity 0.3s ease;
 }
 
 .control-btn {
@@ -178,8 +244,77 @@ body {
     border: 3px solid #000;
     border-radius: 6px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s ease; /* Enhanced transition */
     font-family: 'Arial Black', sans-serif;
+    position: relative;
+    overflow: hidden;
+    /* Add animation on load */
+    animation: buttonSlideIn 0.4s ease forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+/* Stagger animation for each button */
+.shuffle-btn {
+    animation-delay: 0s;
+}
+
+.clear-btn {
+    animation-delay: 0.1s;
+}
+
+.hint-btn {
+    animation-delay: 0.2s;
+}
+
+.submit-btn {
+    animation-delay: 0.3s;
+}
+
+@keyframes buttonSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Ripple effect on click */
+.control-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.control-btn:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* Enhanced hover effects */
+.shuffle-btn {
+    background: #9c27b0;
+    color: #fff;
+}
+
+.shuffle-btn:hover {
+    background: #7b1fa2;
+    transform: translateY(-3px) rotate(-2deg);
+    box-shadow: 0 6px 12px rgba(156, 39, 176, 0.4);
+}
+
+.shuffle-btn:active {
+    transform: translateY(0) rotate(0deg);
 }
 
 .clear-btn {
@@ -189,6 +324,71 @@ body {
 
 .clear-btn:hover {
     background: #ff4444;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(255, 68, 68, 0.4);
+}
+
+.clear-btn:active {
+    transform: translateY(0);
+}
+
+.hint-btn {
+    background: #66ccff;
+    color: #fff;
+}
+
+.hint-btn:hover {
+    background: #44aaff;
+    transform: translateY(-3px) rotate(2deg);
+    box-shadow: 0 6px 12px rgba(68, 170, 255, 0.4);
+}
+
+.hint-btn:active {
+    transform: translateY(0) rotate(0deg);
+}
+
+.submit-btn {
+    background: #4caf50;
+    color: #fff;
+}
+
+.submit-btn:hover {
+    background: #45a049;
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 12px rgba(76, 175, 80, 0.4);
+}
+
+.submit-btn:active {
+    transform: translateY(0) scale(1);
+}
+
+/* Pulse animation when enabled */
+.submit-btn.ready {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
+    }
+}
+
+/* Disabled state */
+.control-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 420px) {
+    .control-btn {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
 }
 
 .hint-btn {
@@ -239,6 +439,9 @@ body {
     align-items: center;
     z-index: 1000;
     padding: 20px;
+    /* Add transitions */
+    opacity: 1;
+    transition: opacity 0.3s ease;
 }
 
 .quote-modal {
@@ -535,4 +738,16 @@ body {
         padding: 12px;
         margin: -10px -10px 8px -10px;
     }
+}
+
+.images-grid,
+.answer-boxes,
+.letter-pool,
+.controls {
+    max-width: 100%; /* Add this to all */
+    overflow-x: hidden; /* Add this to all */
+}
+
+html {
+    overflow-x: hidden; /* Add this */
 }
