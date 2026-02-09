@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if(username === correctUsername && password === correctPassword){
             sessionStorage.setItem('isLoggedIn', 'true');
             
-            window.location.href = "question/question.html";
+            window.location.href = "question/";
         } else {
             modal.style.display = "block";
         }

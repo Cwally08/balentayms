@@ -94,7 +94,7 @@ function handleYes() {
     
     // Redirect after 2 seconds
     setTimeout(() => {
-        window.location.href = '../game/game.html';
+        window.location.href = '../game/';
     }, 2000);
 }
 
